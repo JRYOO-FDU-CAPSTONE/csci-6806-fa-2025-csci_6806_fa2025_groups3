@@ -5,9 +5,6 @@ fi
 
 # Example
 
-# We assume the repository has already been cloned; if not, run the line below:
-# git clone --recurse-submodules https://github.com/wonglkd/Baleen-FAST24.git
-
 cd Baleen-FAST24
 git pull --recurse-submodules
 
@@ -18,7 +15,7 @@ conda env create -f BCacheSim/install/env_cachelib-py-3.11.yaml
 conda activate cachelib-py-3.11
 
 # Install dependencies (pip) - alternative to Conda
-# python3 -m pip install -r BCacheSim/install/requirements.txt --user
+
 
 # Download trace files
 cd data
