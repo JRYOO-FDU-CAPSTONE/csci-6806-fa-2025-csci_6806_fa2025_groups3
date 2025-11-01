@@ -48,6 +48,8 @@ class StatsDumper(object):
                  trace_stats=None, ram_cache=None, prefetcher=None,
                  admission_policy=None,
                  start_time=None, skip_first_secs=None):
+        # TODO(SSultana): starting Feature1 implementation
+        print("SSultana Feature1 stub is initialized")
         self.cache = cache
         self.ram_cache = ram_cache
         self.prefetcher = prefetcher
