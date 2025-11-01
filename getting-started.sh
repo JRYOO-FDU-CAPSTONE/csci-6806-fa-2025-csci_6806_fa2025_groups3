@@ -3,6 +3,8 @@ if [ ! -d "BCacheSim" ]; then
   exit 1
 fi
 
+# Example
+
 # We assume the repository has already been cloned; if not, run the line below:
 # git clone --recurse-submodules https://github.com/wonglkd/Baleen-FAST24.git
 
