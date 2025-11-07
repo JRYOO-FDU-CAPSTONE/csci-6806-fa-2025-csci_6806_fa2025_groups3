@@ -216,7 +216,6 @@ def plot_pdf_graph(alpha_tti_values, peak_dt_values, bin_counts, output_dir):
     print(f"PDF graph saved to {output_path}")
     return output_path
 
-
 def main():
     # Define directories
     data_dir = '/home/ubuntu/Baleen-FAST24/data/storage/20230325/Region7'
