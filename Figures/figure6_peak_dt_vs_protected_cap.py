@@ -101,68 +101,6 @@ def calculate_protected_cap_metrics(trace_data):
 
     return protected_caps, peak_dt_values
 
-def plot_figure6(protected_caps, peak_dt_values, output_dir):
-    """Plot a clean bar graph for Figure 6 with proper value positioning."""
-    print("Plotting Figure 6 with proper value positioning...")
-
-    # Create figure with improved layout
-    fig, ax = plt.subplots(figsize=(14, 8))
-    plt.subplots_adjust(right=0.85, top=0.9, bottom=0.2, left=0.1)
-
-    # Create positions for bars with proper spacing
-    x_pos = np.arange(len(protected_caps))
-
-    # Create bars with a clean color
-    bars = ax.bar(x_pos, peak_dt_values,
-                color='#2c7fb8', width=0.7, alpha=0.9)
-
-    # Simple labels with larger font
-    ax.set_title('Peak DT vs. PROTECTED cap (E2 EDE)', fontsize=16, pad=20, weight='bold')
-    ax.set_xlabel('PROTECTED cap (Pipeline ID)', fontsize=14, labelpad=10)
-    ax.set_ylabel('Peak DT (milliseconds)', fontsize=14, labelpad=10)
-
-    # Set reasonable axis limits with extra padding
-    if peak_dt_values:
-        ax.set_ylim(0, max(peak_dt_values) * 1.3)  # Increased padding for labels
-
-    # Simple grid
-    ax.grid(True, linestyle='--', alpha=0.3, axis='y')
-
-    # Add value labels ABOVE the bars with proper spacing
-    if peak_dt_values:
-        max_peak = max(peak_dt_values)
-        for i, (x, value) in enumerate(zip(x_pos, peak_dt_values)):
-            # Position the label above the bar with extra padding
-            label_y = value + max_peak * 0.15  # Increased padding
-            ax.text(x, label_y,
-                   f'{value:.0f}',
-                   ha='center', va='bottom', fontsize=10, fontweight='bold')
-
-    # Add statistics box with improved formatting
-    if peak_dt_values:
-        stats_text = (f"Pipelines: {len(protected_caps):,}\n"
-                     f"Avg Peak DT: {np.mean(peak_dt_values):.1f}ms\n"
-                     f"Max Peak DT: {max(peak_dt_values):.1f}ms")
-
-        ax.text(0.98, 0.95, stats_text, transform=ax.transAxes,
-               fontsize=12, ha='right', va='top',
-               bbox=dict(boxstyle='round,pad=0.5', facecolor='white', alpha=0.9))
-
-    # Format x-axis labels
-    ax.set_xticks(x_pos)
-    ax.set_xticklabels(protected_caps, rotation=45, ha='right')
-
-    # Adjust layout to prevent label cutoff
-    plt.tight_layout()
-
-    # Save as PDF with high quality
-    output_path = os.path.join(output_dir, 'Figure6_PeakDT_vs_PROTECTED_cap.pdf')
-    plt.savefig(output_path, bbox_inches='tight', format='pdf', dpi=300)
-    plt.close()
-
-    print(f"Figure 6 saved to {output_path}")
-    return output_path
-
 def main():
     # Limit memory usage
     limit_memory()
