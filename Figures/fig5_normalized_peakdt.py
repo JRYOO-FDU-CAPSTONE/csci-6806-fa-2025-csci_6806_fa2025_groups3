@@ -18,3 +18,14 @@ def annotate(ax, xs, ys, color):
                 ha="center", va="top" if below else "bottom",
                 color=color, fontsize=11, fontweight=600)
 
+fig, ax = plt.subplots(figsize=(9.5, 5.6))
+
+ln1, = ax.plot(tau_x,  tau_norm,  marker="o", linewidth=1.9, label=r"DT-SLRU: $\tau_{DT}$")
+ln2, = ax.plot(cap_x,  cap_norm,  marker="o", linewidth=1.9, label="EDE: protected cap")
+ln3, = ax.plot(atti_x, atti_norm, marker="o", linewidth=1.9, label=r"EDE: $\alpha_{TTI}$")
+
+ax.axhline(1.0, color="gray", linestyle="--", linewidth=1.2, alpha=0.8)
+
+annotate(ax, tau_x,  tau_norm,  ln1.get_color())
+annotate(ax, cap_x,  cap_norm,  ln2.get_color())
+annotate(ax, atti_x, atti_norm, ln3.get_color())
