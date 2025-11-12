@@ -1,0 +1,42 @@
+import matplotlib.pyplot as plt
+plt.rcParams.update({"font.size": 11})
+
+tau_x   = [0.05, 0.10, 0.20, 0.50, 1.00]
+tau_norm= [1.086, 1.052, 1.034, 1.000, 0.974]
+cap_x    = [0.1, 0.3, 0.5, 0.7, 0.9]
+cap_norm = [1.060, 1.000, 0.945, 0.975, 1.000]
+atti_x    = [0.1, 0.3, 0.5, 0.7, 0.9]
+atti_norm = [1.022, 0.934, 1.025, 1.089, 1.245]
+
+def annotate(ax, xs, ys, color):
+    ymin = min(ys)
+    spread = max(ys) - min(ys) or 0.05
+    off = 0.03 * spread
+    for x, y in zip(xs, ys):
+        below = abs(y - ymin) < 1e-9
+        ax.text(x, y - off if below else y + off, f"{y:.3f}",
+                ha="center", va="top" if below else "bottom",
+                color=color, fontsize=11, fontweight=600)
+
+fig, ax = plt.subplots(figsize=(9.5, 5.6))
+
+ln1, = ax.plot(tau_x,  tau_norm,  marker="o", linewidth=1.9, label=r"DT-SLRU: $\tau_{DT}$")
+ln2, = ax.plot(cap_x,  cap_norm,  marker="o", linewidth=1.9, label="EDE: protected cap")
+ln3, = ax.plot(atti_x, atti_norm, marker="o", linewidth=1.9, label=r"EDE: $\alpha_{TTI}$")
+
+ax.axhline(1.0, color="gray", linestyle="--", linewidth=1.2, alpha=0.8)
+
+annotate(ax, tau_x,  tau_norm,  ln1.get_color())
+annotate(ax, cap_x,  cap_norm,  ln2.get_color())
+annotate(ax, atti_x, atti_norm, ln3.get_color())
+
+
+ax.set_xlabel("Parameter value (dimensionless)")
+ax.set_ylabel("Normalized Peak DT (× baseline)")
+ax.set_title("Figure 5: Normalized Peak DT across E1/E2 parameter sweeps")
+ax.grid(True, alpha=0.35)
+ax.legend(frameon=True).get_frame().set_alpha(0.9)
+plt.tight_layout()
+plt.savefig("figure5_normalized_overlay.png", dpi=300)
+plt.show()
+print("Saved: figure5_normalized_overlay.png")
