@@ -8,12 +8,14 @@ All scripts are lightweight, reproducible, and produce publication-quality figur
 ---
 
 ## **System Requirements**
- **OS**  Ubuntu 22.04 
- **CPU**  x86_64 
- **Memory**  ≥ 8 GB (16 GB recommended) |
- **GPU**  Optional (CPU-only supported) |
- **Python**  3.10.6 |
- **Dependencies** | anaconda, numpy==1.23.5, matplotlib==3.7.1, torch==2.1.0, scipy, tqdm |
+| Component        | Requirement                                                           |
+|------------------|-----------------------------------------------------------------------|
+| **OS**           | Ubuntu 22.04                                                          |
+| **CPU**          | x86_64 (AVX2 support)                                                 |
+| **Memory**       | ≥ 8 GB (16 GB recommended)                                            |
+| **GPU**          | Optional (CPU-only supported)                                         |
+| **Python**       | 3.10.6                                                                |
+| **Dependencies** | anaconda, numpy==1.23.5, matplotlib==3.7.1, torch==2.1.0, scipy, tqdm |
 
 ### **Setup**
 
