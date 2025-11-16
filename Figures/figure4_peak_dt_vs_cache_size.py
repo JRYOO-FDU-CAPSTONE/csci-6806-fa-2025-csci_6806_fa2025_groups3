@@ -122,6 +122,68 @@ def calculate_metrics(block_size_requests, selected_sizes):
 
     return cache_sizes, peak_dt_values
 
+def plot_figure4(cache_sizes, peak_values, output_dir):
+    """Plot a clean bar graph for Figure 4 with proper value label positioning."""
+    print("Plotting Figure 4 with proper value labels...")
+
+    # Create figure with improved layout
+    fig, ax = plt.subplots(figsize=(14, 8))
+    plt.subplots_adjust(right=0.85, top=0.9, bottom=0.2, left=0.1)
+
+    # Create positions for bars with proper spacing
+    x_pos = np.arange(len(cache_sizes))
+
+    # Create bars with a clean color
+    bars = ax.bar(x_pos, peak_values,
+                color='#2c7fb8', width=0.7, alpha=0.9)
+
+    # Simple labels with larger font
+    ax.set_title('Peak DT vs. Cache Size (LRU vs. best scheme)', fontsize=16, pad=20, weight='bold')
+    ax.set_xlabel('Cache Size (MB)', fontsize=14, labelpad=10)
+    ax.set_ylabel('Peak DT (milliseconds)', fontsize=14, labelpad=10)
+
+    # Set reasonable axis limits with extra padding
+    if peak_values:
+        ax.set_ylim(0, max(peak_values) * 1.4)  # Increased padding for labels
+
+    # Simple grid
+    ax.grid(True, linestyle='--', alpha=0.3, axis='y')
+
+    # Add value labels ABOVE the bars with proper spacing
+    if peak_values:
+        max_peak = max(peak_values)
+        for i, (x, value) in enumerate(zip(x_pos, peak_values)):
+            # Position the label above the bar with extra padding
+            label_y = value + max_peak * 0.15  # Increased padding
+            ax.text(x, label_y,
+                   f'{value:.0f}',
+                   ha='center', va='bottom', fontsize=10, fontweight='bold')
+
+    # Add statistics box with improved formatting
+    if peak_values:
+        stats_text = (f"Cache Sizes: {len(cache_sizes):,}\n"
+                     f"Avg Peak DT: {np.mean(peak_values):.1f}ms\n"
+                     f"Max Peak DT: {max(peak_values):.1f}ms")
+
+        ax.text(0.98, 0.95, stats_text, transform=ax.transAxes,
+               fontsize=12, ha='right', va='top',
+               bbox=dict(boxstyle='round,pad=0.5', facecolor='white', alpha=0.9))
+
+    # Format x-axis labels with proper spacing
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels([f"{x:.1f}" for x in cache_sizes], rotation=45, ha='right')
+
+    # Adjust layout to prevent label cutoff
+    plt.tight_layout()
+
+    # Save as PDF with high quality
+    output_path = os.path.join(output_dir, 'Figure4_PeakDT_vs_CacheSize.pdf')
+    plt.savefig(output_path, bbox_inches='tight', format='pdf', dpi=300)
+    plt.close()
+
+    print(f"Figure 4 saved to {output_path}")
+    return output_path
+
 def main():
     # Limit memory usage
     limit_memory()
