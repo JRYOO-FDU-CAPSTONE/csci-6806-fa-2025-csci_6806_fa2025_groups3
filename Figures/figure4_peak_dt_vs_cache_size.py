@@ -78,6 +78,49 @@ def analyze_cache_sizes(trace_data):
 
     return selected_sizes, block_size_requests
 
+def calculate_metrics(block_size_requests, selected_sizes):
+    """Calculate metrics for selected cache sizes."""
+    print("Calculating metrics for selected cache sizes...")
+
+    cache_sizes = []
+    peak_dt_values = []
+
+    for size in selected_sizes:
+        requests = block_size_requests[size]
+        if len(requests) < 2:
+            print(f"Not enough requests for cache size {size} MB")
+            continue
+
+        try:
+            # Sort requests by time
+            requests.sort(key=lambda x: x['time'])
+
+            # Calculate inter-arrival times
+            inter_arrival_times = []
+            for i in range(1, len(requests)):
+                delta = (requests[i]['time'] - requests[i-1]['time']) * 1000  # Convert to ms
+                if 0 < delta < 20000:
+                    inter_arrival_times.append(delta)
+
+            if not inter_arrival_times:
+                print(f"No valid inter-arrival times for cache size {size} MB")
+                continue
+
+            # Calculate peak DT as the 95th percentile
+            peak_dt = np.percentile(inter_arrival_times, 95)
+            cache_sizes.append(size)
+            peak_dt_values.append(peak_dt)
+            print(f"Cache size {size} MB: Peak DT = {peak_dt:.1f}ms")
+
+        except Exception as e:
+            print(f"Error processing cache size {size} MB: {e}")
+            continue
+
+    if not cache_sizes:
+        print("No valid metrics calculated")
+        return None, None
+
+    return cache_sizes, peak_dt_values
 
 def main():
     # Limit memory usage
