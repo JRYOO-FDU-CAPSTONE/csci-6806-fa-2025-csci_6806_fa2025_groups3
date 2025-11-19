@@ -1,4 +1,0 @@
-eviction_scheme,hit_rate_pct
-E0-LRU,23.9
-E1-DT-SLRU,6.4
-E2-EDE,4.4
