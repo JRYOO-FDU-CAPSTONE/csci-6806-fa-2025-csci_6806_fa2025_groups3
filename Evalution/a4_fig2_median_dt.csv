@@ -1,0 +1,4 @@
+eviction_scheme,median_dt_s
+E0-LRU,3.009
+E1-DT-SLRU,3.895
+E2-EDE,3.981
