@@ -22,3 +22,21 @@ def set_baleen_style():
         "grid.alpha": 0.22,
         "grid.linestyle": "--",
     })
+
+def beautify(ax):
+    for sp in ax.spines.values():
+        sp.set_linewidth(1.1)
+        sp.set_color("black")
+    ax.grid(True, alpha=0.22, linestyle="--", linewidth=0.8)
+
+def savefig(path):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    plt.tight_layout()
+    plt.savefig(path)
+    plt.close()
+    print("Saved:", path)
+
+def fetch_fig3_data(csv_path="a4_fig3_hit_rate.csv"):
+    df = pd.read_csv(csv_path)
+    hit_rate_pct = dict(zip(df['scheme'], df['hit_rate_pct']))
+    return hit_rate_pct
